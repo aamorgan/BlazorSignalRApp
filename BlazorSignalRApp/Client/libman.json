@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    //{
+    //  "library": "@fullcalendar/core",
+    //  "provider": "unpkg",
+    //  "destination": "wwwroot/lib/main"
+    //}
+  ]
+}

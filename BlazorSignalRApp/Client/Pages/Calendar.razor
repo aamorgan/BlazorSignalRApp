@@ -1,0 +1,25 @@
+﻿@page "/calendar"
+
+@inject IJSRuntime JsRuntime;
+
+<h3>Tradoc Enterprise Calendar v4 - Blazor edition</h3>
+
+<button type="button" class="btn btn-primary" @onclick="renderCal">
+    Lets GO!
+</button>
+
+<div class="container">
+    <div id='calendar'></div>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await renderCal();
+    }
+
+    private async void renderCal()
+    {
+        await JsRuntime.InvokeVoidAsync("calendarJsFunctions.calendar");
+    }
+}
