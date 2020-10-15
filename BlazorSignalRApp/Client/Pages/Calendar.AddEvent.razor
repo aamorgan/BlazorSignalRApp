@@ -1,0 +1,37 @@
+﻿@page "/calendar/addEvent"
+@inject NavigationManager CalNavManager
+
+@inject IJSRuntime JsRuntime;
+
+<h3>Tradoc Enterprise Calendar v4 - Blazor edition</h3>
+
+<div class="container">
+    <form>
+        <div class="form-group">
+            <label for="eventDescript">Event Description</label>
+            <input type="text" @bind="@Description" class="form-control" id="eventDescript" aria-describedby="descHelp" placeholder="Enter description">
+            <small id="descHelp" class="form-text text-muted">Please describe the planned event for this time.</small>
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="classCheck">
+            <label class="form-check-label" for="exampleCheck1">Classified?</label>
+        </div>
+        <button type="button" class="btn btn-primary" @onclick="addNewEvent">
+            Add new Event
+        </button>
+    </form>
+</div>
+
+
+@code {
+    private string Description = "";
+
+    private async Task addNewEvent()
+    {
+        if (!string.IsNullOrEmpty(Description))
+        {
+            await JsRuntime.InvokeVoidAsync("calendarJsFunctions.addNewEvent", new object[] { Description });
+        }
+        CalNavManager.NavigateTo("calendar");
+    }
+}

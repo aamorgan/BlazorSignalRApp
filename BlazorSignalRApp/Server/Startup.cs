@@ -42,6 +42,7 @@ namespace BlazorSignalRApp.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
+                app.UseBrowserLink();
             }
             else
             {

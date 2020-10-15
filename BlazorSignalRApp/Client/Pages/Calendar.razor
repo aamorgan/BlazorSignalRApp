@@ -1,25 +1,55 @@
 ﻿@page "/calendar"
+@page "/calendar/recommend"
+@page "/calendar/notify"
+@page "/calendar/print"
+@page "/calendar/export"
+@page "/calendar/default"
+@page "/calendar/legend"
+@page "/calendar/outlook"
+@page "/calendar/settings"
 
 @inject IJSRuntime JsRuntime;
 
 <h3>Tradoc Enterprise Calendar v4 - Blazor edition</h3>
 
-<button type="button" class="btn btn-primary" @onclick="renderCal">
-    Lets GO!
-</button>
-
 <div class="container">
-    <div id='calendar'></div>
+    <div class="row m-5">
+        <div class="col-4">
+            <button type="button" class="btn btn-primary" @onclick="addNewEvent">
+                Add Birthday!
+            </button>
+        </div>
+        <div class="col-4">
+            <button type="button" class="btn btn-danger" @onclick="removeEvent">
+                Kill Event!
+            </button>
+        </div>
+    </div>
 </div>
 
+<div id='calendar'></div>
+
 @code {
-    protected override async Task OnInitializedAsync()
+    private async Task addNewEvent()
     {
-        await renderCal();
+        await JsRuntime.InvokeVoidAsync("calendarJsFunctions.addNewEvent", new object[] { "Birthday Celebration" });
+    }
+    private async Task removeEvent()
+    {
+        await JsRuntime.InvokeVoidAsync("calendarJsFunctions.removeEvent");
     }
 
-    private async void renderCal()
+    private async Task renderCal()
     {
         await JsRuntime.InvokeVoidAsync("calendarJsFunctions.calendar");
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await renderCal();
+        }
+    }
+
 }
